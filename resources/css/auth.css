@@ -1,0 +1,353 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #111111;
+}
+
+
+/* ========================================
+   REGISTER PAGE
+======================================== */
+
+.register-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    border-top: 3px solid #3f293f;
+}
+
+
+/* ========================================
+   LEFT - FORM
+======================================== */
+
+.register-form-wrapper {
+    width: 47%;
+    min-height: calc(100vh - 3px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #ffffff;
+}
+
+
+.register-form {
+    width: 70%;
+    max-width: 430px;
+}
+
+
+/* ========================================
+   TITLE
+======================================== */
+
+.register-form h1 {
+    font-size: 27px;
+    font-weight: 600;
+
+    margin-bottom: 55px;
+}
+
+
+/* ========================================
+   FORM
+======================================== */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 27px;
+
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+
+    padding: 0 10px;
+
+    font-size: 10px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #3c6727;
+}
+
+.form-group input::placeholder {
+    color: #c7c7c7;
+}
+
+
+/* ========================================
+   ERROR
+======================================== */
+
+.error {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #dc2626;
+    font-size: 10px;
+}
+
+
+/* ========================================
+   TERMS
+======================================== */
+
+.terms {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+
+.terms input {
+    width: 10px;
+    height: 10px;
+
+    cursor: pointer;
+}
+
+.terms label {
+    font-size: 9px;
+}
+
+.terms a {
+    color: #111111;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   SIGN UP BUTTON
+======================================== */
+
+.signup-button {
+    width: 100%;
+    height: 27px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #3c6727;
+    color: white;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.signup-button:hover {
+    background: #31551f;
+}
+
+
+/* ========================================
+   DIVIDER
+======================================== */
+
+.divider {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 53px 0;
+}
+
+.divider span {
+    flex: 1;
+
+    height: 1px;
+
+    background: #eeeeee;
+}
+
+.divider p {
+    font-size: 9px;
+    color: #111111;
+}
+
+
+/* ========================================
+   SOCIAL BUTTONS
+======================================== */
+
+.social-buttons {
+    display: flex;
+
+    gap: 18px;
+}
+
+.social-button {
+    flex: 1;
+
+    height: 27px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 9px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.social-button:hover {
+    background: #f8f8f8;
+}
+
+
+/* Google */
+
+.google-icon {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4285f4;
+}
+
+
+/* Apple */
+
+.apple-icon {
+    font-size: 12px;
+    color: #000000;
+}
+
+
+/* ========================================
+   LOGIN LINK
+======================================== */
+
+.login-link {
+    text-align: center;
+
+    margin-top: 21px;
+
+    font-size: 10px;
+}
+
+.login-link a {
+    color: #0047ff;
+
+    text-decoration: none;
+
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* ========================================
+   RIGHT - IMAGE
+======================================== */
+
+.register-image {
+    width: 53%;
+    min-height: calc(100vh - 3px);
+
+    border-left: 3px solid #1995e8;
+
+    overflow: hidden;
+
+    border-radius: 0 0 0 32px;
+}
+
+.register-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+
+    .register-form-wrapper {
+        width: 100%;
+    }
+
+    .register-image {
+        display: none;
+    }
+
+    .register-form {
+        width: 80%;
+        max-width: 430px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .register-form-wrapper {
+        padding: 40px 0;
+    }
+
+    .register-form {
+        width: 88%;
+    }
+
+    .register-form h1 {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
