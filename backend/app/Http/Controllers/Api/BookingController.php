@@ -66,7 +66,7 @@ class BookingController extends Controller
 
     public function myBookings()
     {
-        $bookings = Booking::with('facility')
+        $bookings = Booking::with(['facility', 'logs.user.roles'])
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -88,7 +88,8 @@ class BookingController extends Controller
     {
         $request->validate([
             'action' => 'required|in:approve,reject',
-            'rejection_reason' => 'required_if:action,reject|string|nullable'
+            'rejection_reason' => 'required_if:action,reject|string|nullable',
+            'approval_message' => 'nullable|string'
         ]);
 
         $booking = Booking::findOrFail($id);
@@ -106,7 +107,7 @@ class BookingController extends Controller
                 'action' => 'approved',
                 'old_status' => $oldStatus,
                 'new_status' => 'approved',
-                'notes' => 'Peminjaman disetujui',
+                'notes' => $request->approval_message
             ]);
             return response()->json(['message' => 'Peminjaman berhasil disetujui']);
         } else {

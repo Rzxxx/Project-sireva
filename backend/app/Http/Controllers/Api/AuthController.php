@@ -19,6 +19,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Email atau password salah'], 401);
         }
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -29,6 +30,9 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'birth_date' => $user->birth_date,
+                'phone_number' => $user->phone_number,
+                'identity_number' => $user->identity_number,
                 'roles' => $user->getRoleNames(), 
             ]
         ]);

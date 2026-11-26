@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -41,14 +42,12 @@ class BookingController extends Controller
                     }
                 }
 
-                // Jika aman, simpan data
                 return Booking::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => Auth::id(),
                     'facility_id' => $validated['facility_id'],
                     'start_time' => $validated['start_time'],
                     'end_time' => $validated['end_time'],
                     'status' => 'pending',
-                    // ... data lainnya
                 ]);
             });
 

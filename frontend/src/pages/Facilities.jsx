@@ -58,94 +58,127 @@ export default function Facilities() {
   };
 
   return (
-    <div className="max-w-5xl">
-      <div className="flex justify-between items-end mb-6">
+    <motion.div 
+      initial={{ opacity: 0, y: 15 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      className="max-w-5xl"
+    >
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Kelola Ruangan</h1>
-          <p className="text-gray-400">Atur daftar fasilitas kampus yang dapat dipinjam.</p>
+          <h1 className="text-3xl font-extrabold text-[#1E293B] mb-2 tracking-tight">Kelola Ruangan</h1>
+          <p className="text-slate-500">Atur daftar fasilitas kampus yang dapat dipinjam.</p>
         </div>
         {canManage && (
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setIsModalOpen(true)}
-            className="bg-[#a3d977] hover:bg-[#8fc766] text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors"
+            className="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2.5 px-5 rounded-xl flex items-center gap-2 shadow-lg shadow-orange-500/30 transition-all"
           >
             <Plus size={18} /> Tambah Fasilitas
-          </button>
+          </motion.button>
         )}
       </div>
 
-      {/* Tabel Data */}
-      <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden">
-        <table className="w-full text-left text-gray-300">
-          <thead className="bg-[#121212] text-gray-400 text-sm border-b border-gray-800">
-            <tr>
-              <th className="px-6 py-4 font-medium">Nama Fasilitas</th>
-              <th className="px-6 py-4 font-medium">Kategori</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              {canManage && <th className="px-6 py-4 font-medium text-right">Aksi</th>}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800">
-            {isLoading ? (
-              <tr><td colSpan="4" className="text-center py-8">Memuat data...</td></tr>
-            ) : facilities.length === 0 ? (
-              <tr><td colSpan="4" className="text-center py-8 text-gray-500">Belum ada data fasilitas.</td></tr>
-            ) : (
-              facilities.map((facility) => (
-                <tr key={facility.id} className="hover:bg-[#222] transition-colors">
-                  <td className="px-6 py-4 font-medium text-white">{facility.name}</td>
-                  <td className="px-6 py-4"><span className="bg-gray-800 text-gray-300 py-1 px-3 rounded-full text-xs">{facility.type}</span></td>
-                  <td className="px-6 py-4">
-                    <span className={`text-xs font-medium ${facility.is_active ? 'text-green-400' : 'text-red-400'}`}>
-                      {facility.is_active ? 'Aktif' : 'Nonaktif'}
-                    </span>
-                  </td>
-                  {canManage && (
-                    <td className="px-6 py-4 text-right">
-                      <button onClick={() => handleDelete(facility.id)} className="text-red-400 hover:text-red-300 p-2 bg-red-400/10 rounded-lg">
-                        <Trash2 size={18} />
-                      </button>
+      {/* Tabel Data - Tema Terang */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-slate-600">
+            <thead className="bg-slate-50 text-slate-500 text-sm border-b border-slate-200">
+              <tr>
+                <th className="px-6 py-4 font-bold">Nama Fasilitas</th>
+                <th className="px-6 py-4 font-bold">Kategori</th>
+                <th className="px-6 py-4 font-bold">Status</th>
+                {canManage && <th className="px-6 py-4 font-bold text-right">Aksi</th>}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {isLoading ? (
+                <tr><td colSpan="4" className="text-center py-10 text-slate-400 animate-pulse font-medium">Memuat data...</td></tr>
+              ) : facilities.length === 0 ? (
+                <tr><td colSpan="4" className="text-center py-10 text-slate-400 font-medium">Belum ada data fasilitas.</td></tr>
+              ) : (
+                facilities.map((facility, index) => (
+                  <motion.tr 
+                    key={facility.id} 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="hover:bg-slate-50/80 transition-colors group"
+                  >
+                    <td className="px-6 py-4 font-bold text-[#1E293B]">{facility.name}</td>
+                    <td className="px-6 py-4">
+                      <span className="bg-slate-100 text-slate-600 py-1.5 px-3 rounded-full text-xs font-bold">
+                        {facility.type}
+                      </span>
                     </td>
-                  )}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                    <td className="px-6 py-4">
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-md ${facility.is_active ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                        {facility.is_active ? 'Aktif' : 'Nonaktif'}
+                      </span>
+                    </td>
+                    {canManage && (
+                      <td className="px-6 py-4 text-right">
+                        <motion.button 
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => handleDelete(facility.id)} 
+                          className="text-rose-500 hover:text-rose-600 p-2 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                        >
+                          <Trash2 size={18} />
+                        </motion.button>
+                      </td>
+                    )}
+                  </motion.tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* MODAL TAMBAH FASILITAS */}
+      {/* MODAL TAMBAH FASILITAS - Tema Terang */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#1a1a1a] w-full max-w-md rounded-xl border border-gray-800 p-6 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 relative overflow-hidden"
             >
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">Tambah Fasilitas</h2>
-                <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white"><X size={20}/></button>
+              {/* Aksen garis atas Orange */}
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-orange-500"></div>
+
+              <div className="flex justify-between items-center mb-6 mt-2">
+                <h2 className="text-xl font-extrabold text-[#1E293B]">Tambah Fasilitas</h2>
+                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 p-1.5 rounded-lg transition-colors"><X size={20}/></button>
               </div>
 
-              {error && <div className="bg-red-500/10 text-red-400 p-3 rounded mb-4 text-sm flex gap-2 items-center"><AlertCircle size={16}/> {error}</div>}
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
+                  className="bg-rose-50 text-rose-500 p-3 rounded-lg mb-5 text-sm flex gap-2 items-center border border-rose-100"
+                >
+                  <AlertCircle size={16}/> {error}
+                </motion.div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">Nama Fasilitas</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Nama Fasilitas</label>
                   <input 
                     type="text" required
                     value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full bg-[#121212] text-white border border-gray-700 rounded-lg p-2.5 focus:border-green-500 outline-none"
-                    placeholder="Contoh: Lab Komputer 1"
+                    className="w-full bg-slate-50 text-slate-800 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:bg-white outline-none transition-all"
+                    placeholder="Contoh: Lab Komputer 301"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">Kategori</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Kategori</label>
                   <select 
                     value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})}
-                    className="w-full bg-[#121212] text-white border border-gray-700 rounded-lg p-2.5 focus:border-green-500 outline-none"
+                    className="w-full bg-slate-50 text-slate-800 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:bg-white outline-none transition-all cursor-pointer"
                   >
                     <option value="Ruang Kelas">Ruang Kelas</option>
                     <option value="Laboratorium">Laboratorium</option>
@@ -154,23 +187,29 @@ export default function Facilities() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1">Deskripsi (Opsional)</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Deskripsi (Opsional)</label>
                   <textarea 
                     value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    className="w-full bg-[#121212] text-white border border-gray-700 rounded-lg p-2.5 focus:border-green-500 outline-none"
+                    className="w-full bg-slate-50 text-slate-800 border border-slate-200 rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:bg-white outline-none transition-all"
                     placeholder="Kapasitas 30 orang, ada AC..."
                     rows="2"
                   ></textarea>
                 </div>
                 <div className="pt-4 flex justify-end gap-3">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-400 hover:text-white">Batal</button>
-                  <button type="submit" className="bg-[#a3d977] hover:bg-[#8fc766] text-black font-bold px-6 py-2 rounded-lg">Simpan</button>
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-slate-500 font-bold hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors">Batal</button>
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    type="submit" 
+                    className="bg-orange-500 hover:bg-orange-400 text-white font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-orange-500/30 transition-colors"
+                  >
+                    Simpan
+                  </motion.button>
                 </div>
               </form>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

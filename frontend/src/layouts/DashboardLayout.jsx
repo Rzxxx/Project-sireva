@@ -2,10 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/context';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Home, Calendar, User, LayoutGrid, FileText, Users, LogOut, Menu 
-} from 'lucide-react';
-import bgImage from '../assets/bg-dashboard.avif';
+import { Home, User, LayoutGrid, Users, LogOut, Menu, BookCheck, BookOpenCheck} from 'lucide-react';
 
 export default function DashboardLayout() {
   const { user, logout } = useContext(AuthContext);
@@ -20,10 +17,10 @@ export default function DashboardLayout() {
 
   const allMenus = [
     { name: 'Beranda', path: '/dashboard', icon: Home, roles: ['Admin', 'Petugas', 'Mahasiswa', 'Dosen'] },
-    { name: 'Peminjaman', path: '/dashboard/peminjaman', icon: Calendar, roles: ['Admin', 'Petugas', 'Mahasiswa', 'Dosen'] },
+    { name: 'Reservasi', path: '/dashboard/peminjaman', icon: BookCheck, roles: ['Mahasiswa', 'Dosen'] },
+    { name: 'Kelola Ruangan', path: '/dashboard/fasilitas', icon: LayoutGrid, roles: ['Admin'] },
+    { name: 'Pengajuan', path: '/dashboard/pengajuan', icon: BookOpenCheck, roles: ['Petugas'] },
     { name: 'Profil', path: '/dashboard/profil', icon: User, roles: ['Admin', 'Petugas', 'Mahasiswa', 'Dosen'] },
-    { name: 'Kelola Ruangan', path: '/dashboard/fasilitas', icon: LayoutGrid, roles: ['Admin', 'Petugas'] },
-    { name: 'Pengajuan', path: '/dashboard/pengajuan', icon: FileText, roles: ['Admin', 'Petugas'] },
     { name: 'Pengguna', path: '/dashboard/pengguna', icon: Users, roles: ['Admin'] },
   ];
 
@@ -33,17 +30,17 @@ export default function DashboardLayout() {
   );
 
   return (
-    <div className="flex h-screen bg-[#121212] text-white font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#F8FAFC] text-slate-800 font-sans overflow-hidden">
       
-      {/* SIDEBAR */}
+      {/* SIDEBAR - Deep Navy */}
       <motion.aside 
         initial={{ width: 250 }}
         animate={{ width: isSidebarOpen ? 250 : 80 }}
-        className="bg-[#1a1a1a] border-r border-gray-800 flex flex-col h-full z-20 shadow-xl"
+        className="bg-[#1E293B] flex flex-col h-full z-20 shadow-xl"
       >
-        <div className="p-5 flex items-center gap-3 border-b border-gray-800">
-          <img src="/logo-sireva.png" alt="SIREVA" className="h-8" onError={(e) => e.target.style.display = 'none'} />
-          {isSidebarOpen && <h2 className="text-xl font-bold text-blue-400">SIREVA</h2>}
+        <div className="p-5 flex items-center gap-3 border-b border-slate-700/50 h-16">
+          <img src="/favicon.svg" alt="SIREVA" className="h-8 object-contain" onError={(e) => e.target.style.display = 'none'} />
+          {isSidebarOpen && <h2 className="text-xl font-bold text-white tracking-wide">SIREVA</h2>}
         </div>
 
         <div className="flex-1 overflow-y-auto py-4 flex flex-col gap-2 px-3">
@@ -55,57 +52,67 @@ export default function DashboardLayout() {
               <Link 
                 key={menu.name} 
                 to={menu.path}
-                className={`flex items-center gap-4 px-3 py-3 rounded-lg transition-colors ${
-                  isActive ? 'bg-gray-800 text-[#a3d977]' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-200 ${
+                  isActive 
+                    ? 'bg-[#FFF7ED]/10 text-orange-400 font-semibold'
+                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                 }`}
               >
-                <Icon size={20} className={isActive ? 'text-[#a3d977]' : ''} />
-                {isSidebarOpen && <span className="font-medium">{menu.name}</span>}
+                <Icon size={20} className={isActive ? 'text-orange-400' : ''} />
+                {isSidebarOpen && <span>{menu.name}</span>}
               </Link>
             );
           })}
         </div>
 
-        <div className="p-4 border-t border-gray-800">
+        <div className="p-4 border-t border-slate-700/50">
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-4 px-3 py-3 w-full rounded-lg text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+            className="flex items-center gap-4 px-3 py-3 w-full rounded-xl text-slate-400 hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
           >
             <LogOut size={20} />
-            {isSidebarOpen && <span className="font-medium">Keluar</span>}
+            {isSidebarOpen && <span className="font-semibold">Keluar</span>}
           </button>
         </div>
       </motion.aside>
 
       {/* MAIN CONTENT AREA */}
       <div className="flex-1 flex flex-col h-full relative overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-70 pointer-events-none">
-           <img src={bgImage} className="w-full h-full object-cover" alt="bg" />
-        </div>
-
-        {/* TOPBAR */}
-        <header className="h-16 bg-[#1a1a1a]/80 backdrop-blur-md border-b border-gray-800 flex items-center px-6 z-10 justify-between">
-          <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-gray-400 hover:text-white">
+        
+        {/* Topbar - Putih bersih */}
+        <header className="h-16 bg-white border-b border-gray-200 flex items-center px-6 z-10 justify-between shadow-sm">
+          <button 
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+            className="text-slate-500 hover:text-orange-500 transition-colors p-2 rounded-lg hover:bg-orange-50"
+          >
             <Menu size={24} />
           </button>
           
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-300">{user?.name}</span>
-            <div className="w-8 h-8 rounded-full bg-[#a3d977] flex items-center justify-center text-black font-bold">
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-bold text-slate-800 leading-tight">{user?.name}</p>
+              <p className="text-xs text-slate-500">{user?.roles?.[0] || 'User'}</p>
+            </div>
+            {/* Avatar dengan warna Warm Orange */}
+            <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center text-[#1E293B] font-extrabold shadow-md">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
           </div>
         </header>
 
         {/* CONTENT RENDERER (Outlet) */}
-        <main className="flex-1 overflow-y-auto p-6 z-10">
+        <main className="flex-1 overflow-y-auto p-6 z-10 relative">
+          {/* Background pattern tipis (opsional, memberikan tekstur premium) */}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
+          
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3 }}
+              className="relative z-10"
             >
               <Outlet /> 
             </motion.div>

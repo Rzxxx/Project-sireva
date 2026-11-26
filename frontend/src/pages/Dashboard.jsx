@@ -37,20 +37,40 @@ export default function Dashboard() {
   };
 
   const statCards = [
-    { title: 'Total Fasilitas', value: stats.total_facilities, icon: LayoutGrid, color: 'text-blue-400' },
-    { title: 'Peminjaman Aktif', value: stats.active_bookings, icon: CalendarCheck, color: 'text-green-400' },
-    { title: 'Menunggu Persetujuan', value: stats.pending_bookings, icon: Clock, color: 'text-yellow-400' },
+    { 
+      title: 'Total Fasilitas', 
+      value: stats.total_facilities, 
+      icon: LayoutGrid, 
+      color: 'text-blue-600', 
+      bgColor: 'bg-blue-50' 
+    },
+    { 
+      title: 'Peminjaman Aktif', 
+      value: stats.active_bookings, 
+      icon: CalendarCheck, 
+      color: 'text-emerald-600', 
+      bgColor: 'bg-emerald-50' 
+    },
+    { 
+      title: 'Menunggu Persetujuan', 
+      value: stats.pending_bookings, 
+      icon: Clock, 
+      color: 'text-orange-500', 
+      bgColor: 'bg-orange-50' 
+    },
   ];
 
   return (
     <div className="max-w-5xl">
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-        <h1 className="text-3xl font-bold text-white mb-2">Dashboard Utama</h1>
-        <p className="text-gray-400 mb-8">Selamat datang kembali, <span className="text-[#a3d977] font-medium">{user?.name}</span>.</p>
+        <h1 className="text-3xl font-extrabold text-[#1E293B] mb-2 tracking-tight">Dashboard Utama</h1>
+        <p className="text-slate-500 mb-8 text-lg">
+          Selamat datang kembali, <span className="text-orange-500 font-bold">{user?.name}</span>.
+        </p>
       </motion.div>
       
       {isLoading ? (
-        <div className="text-gray-400 animate-pulse">Memuat data statistik...</div>
+        <div className="text-slate-400 animate-pulse font-medium">Memuat data statistik...</div>
       ) : (
         <motion.div 
           variants={containerVariants} 
@@ -62,13 +82,13 @@ export default function Dashboard() {
             <motion.div 
               key={index}
               variants={itemVariants}
-              className="bg-[#1a1a1a]/80 backdrop-blur-md p-6 rounded-2xl border border-gray-800 shadow-xl flex items-center justify-between hover:border-gray-600 transition-colors"
+              className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between hover:shadow-lg hover:border-orange-200 transition-all duration-300"
             >
               <div>
-                <h3 className="text-gray-400 text-sm font-medium mb-1">{card.title}</h3>
-                <p className={`text-4xl font-bold ${card.color}`}>{card.value}</p>
+                <h3 className="text-slate-500 text-sm font-bold mb-1">{card.title}</h3>
+                <p className={`text-4xl font-extrabold ${card.color}`}>{card.value}</p>
               </div>
-              <div className={`p-3 rounded-xl bg-gray-800/50 ${card.color}`}>
+              <div className={`p-4 rounded-xl ${card.bgColor} ${card.color}`}>
                 <card.icon size={28} />
               </div>
             </motion.div>

@@ -16,6 +16,9 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'birth_date' => 'nullable|date',
+            'phone_number' => 'nullable|string|max:20',
+            'identity_number' => 'nullable|string|max:50',
         ]);
 
         $user->update($validated);
@@ -26,6 +29,9 @@ class ProfileController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'birth_date' => $user->birth_date,     
+                'phone_number' => $user->phone_number,
+                'identity_number' => $user->identity_number,
                 'roles' => $user->getRoleNames(),
             ]
         ]);
